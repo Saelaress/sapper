@@ -1,4 +1,18 @@
 package test;
 
+import org.junit.jupiter.api.Test;
+import sapper.Mine;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 public class MineTest {
+
+    @Test
+    public void test_detonate() {
+        Mine mine = new Mine();
+
+        mine.detonate();
+
+        assertTrue(mine.isDetonated());
+    }
 }

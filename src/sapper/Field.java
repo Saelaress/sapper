@@ -18,8 +18,31 @@ public class Field {
 
     private Iterator <Cell> minedCellsIt;
 
-    public Field(int width, int height){
+    public Field(int width, int height) {
+        if(width <= 0) throw new IllegalArgumentException("Field width must be more than 0");
+        if(height <= 0) throw new IllegalArgumentException("Field height must be more than 0");
 
+        this.width = width;
+        this.height = height;
+
+        setupField();
+
+        // Subscribe on mines
+        //TODO
+        //((ExitCell) getCell(exitPoint)).addExitCellActionListener(new ExitCellObserver());
+    }
+
+    private void setupField() {
+        for(int y = 0; y < height; ++y) {
+            for(int x = 0; x < width; ++x) {
+                Point p = new Point(x, y);
+                Cell cell =  new Cell();
+                //TODO
+                //if(x > 0) getCell(new Point(p.getX() - 1, p.getY())).setNeighbor(cell, Direction.EAST);
+                //if(y > 0) getCell(new Point(p.getX(), p.getY() - 1)).setNeighbor(cell, Direction.SOUTH);
+                cells.put(p, cell);
+            }
+        }
     }
 
     public int getWidth() {
@@ -64,5 +87,9 @@ public class Field {
             event.setMine(mine);
             listener.mineIsDetonated(event);
         }
+    }
+
+    public Cell getCell(Point point){
+        return cells.get(point);
     }
 }
