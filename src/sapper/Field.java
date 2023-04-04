@@ -38,11 +38,36 @@ public class Field {
                 Point p = new Point(x, y);
                 Cell cell =  new Cell();
                 //TODO
-                //if(x > 0) getCell(new Point(p.getX() - 1, p.getY())).setNeighbor(cell, Direction.EAST);
-                //if(y > 0) getCell(new Point(p.getX(), p.getY() - 1)).setNeighbor(cell, Direction.SOUTH);
+                if(x > 0) {
+                    Cell neighboorCellEast = getCell(new Point((int) (p.getX() - 1), (int) p.getY()));
+                    neighboorCellEast.neighborCells.add(cell);
+                    cell.neighborCells.add(neighboorCellEast);
+                }
+                if(y > 0) {
+                    Cell neighboorCellNorth = getCell(new Point((int) p.getX(), (int) (p.getY() - 1)));
+                    neighboorCellNorth.neighborCells.add(cell);
+                    cell.neighborCells.add(neighboorCellNorth);
+
+                    //Если есть ячейка на северозападе
+                    if(x > 0) {
+                        Cell neighboorCellNW = getCell(new Point((int) (p.getX()-1), (int) (p.getY()-1)));
+                        neighboorCellNW.neighborCells.add(cell);
+                        cell.neighborCells.add(neighboorCellNW);
+                    }
+
+                    //Если есть ячейка на северовостоке
+                    if(x < width - 1) {
+                        Cell neighboorCellNE = getCell(new Point((int) (p.getX()+1), (int) (p.getY()-1)));
+                        neighboorCellNE.neighborCells.add(cell);
+                        cell.neighborCells.add(neighboorCellNE);
+                    }
+                }
+
                 cells.put(p, cell);
             }
         }
+
+
     }
 
     public int getWidth() {
