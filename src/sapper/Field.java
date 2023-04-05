@@ -16,8 +16,6 @@ public class Field {
     private int width;
     private int height;
 
-    private Iterator <Cell> minedCellsIt;
-
     public Field(int width, int height) {
         if(width <= 0) throw new IllegalArgumentException("Field width must be more than 0");
         if(height <= 0) throw new IllegalArgumentException("Field height must be more than 0");
@@ -37,7 +35,7 @@ public class Field {
             for(int x = 0; x < width; ++x) {
                 Point p = new Point(x, y);
                 Cell cell =  new Cell();
-                //TODO
+
                 if(x > 0) {
                     Cell neighboorCellEast = getCell(new Point((int) (p.getX() - 1), (int) p.getY()));
                     neighboorCellEast.neighborCells.add(cell);
@@ -66,8 +64,6 @@ public class Field {
                 cells.put(p, cell);
             }
         }
-
-
     }
 
     public int getWidth() {
@@ -87,11 +83,25 @@ public class Field {
     }
 
     private Iterator getMinedCells() {
-        return minedCellsIt;
+        ArrayList <Cell> minedCells = new ArrayList<>();
+        for(var i : cells.entrySet()) {
+            Mine mine = i.getValue().getMine();
+            if(mine != null) minedCells.add(i.getValue());
+        }
+
+        Iterator <Cell> minedCellsIterator = minedCells.iterator();
+        return minedCellsIterator;
     }
 
-    private Iterator getEmptyCellsList() {
-        return minedCellsIt;
+    private Iterator getEmptyCells() {
+        ArrayList <Cell> emptyCells = new ArrayList<>();
+        for(var i : cells.entrySet()) {
+            Mine mine = i.getValue().getMine();
+            if(mine == null) emptyCells.add(i.getValue());
+        }
+
+        Iterator <Cell> emptyCellsIterator = emptyCells.iterator();
+        return emptyCellsIterator;
     }
 
     // -------------------- События --------------------

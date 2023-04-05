@@ -27,7 +27,7 @@ public class Cell {
     private Iterator <Cell> neighboorCellsIt = neighborCells.iterator();
 
     /**
-     * NeighboringMines
+     * Neighboring Mines
      */
     private int numOfNeighboringMines = 0;
 
