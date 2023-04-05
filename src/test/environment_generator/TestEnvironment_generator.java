@@ -17,6 +17,7 @@ public class TestEnvironment_generator extends Environment_generator {
 
         field.getCell(new Point(0,2)).setMine(firstMine);
         field.getCell(new Point(2,0)).setMine(secondMine);
+        field.getCell(new Point(2,2)).setMine(secondMine);
     }
 
     @Override

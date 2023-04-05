@@ -13,12 +13,19 @@ public class Game {
     private Game_status game_status;
     private Field gameField;
 
+    private Sapper sapper;
+
     private Environment_generator environment;
 
-    public Game(Environment_generator environment) {
+    public Game(Environment_generator environment, Sapper sapper) {
         this.environment = environment;
 
+        this.sapper = sapper;
         init();
+    }
+
+    public Sapper getSapper() {
+        return sapper;
     }
 
     public Game_status status() {

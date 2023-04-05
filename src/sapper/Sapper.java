@@ -5,6 +5,11 @@ public class Sapper {
     private int life;
     private int flag;
 
+    public Sapper(int life, int flag) {
+        this.life = life;
+        this.flag = flag;
+    }
+
     public int getLife() {
         return life;
     }
@@ -14,7 +19,7 @@ public class Sapper {
     }
 
     public void decLife() {
-
+        //не меньше нуля
     }
 
     public void demine(Cell cell) {
