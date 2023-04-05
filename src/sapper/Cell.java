@@ -24,7 +24,7 @@ public class Cell {
      */
     protected ArrayList <Cell> neighborCells = new ArrayList<Cell>();
 
-    private Iterator <Cell> neighboorCellsIt = neighborCells.iterator();
+    public Iterator <Cell> neighboorCellsIt = neighborCells.iterator();
 
     /**
      * Neighboring Mines
