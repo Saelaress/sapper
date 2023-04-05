@@ -75,11 +75,12 @@ public class Field {
     }
 
     public boolean areAllEmptyCellsOpen() {
+        //TODO
         return false;
     }
 
     public void openMinedCells() {
-
+        //TODO
     }
 
     private Iterator getMinedCells() {
@@ -104,6 +105,10 @@ public class Field {
         return emptyCellsIterator;
     }
 
+    public Cell getCell(Point point){
+        return cells.get(point);
+    }
+
     // -------------------- События --------------------
 
     private ArrayList<FieldActionListener> fieldListListener = new ArrayList<>();
@@ -122,9 +127,5 @@ public class Field {
             event.setMine(mine);
             listener.mineIsDetonated(event);
         }
-    }
-
-    public Cell getCell(Point point){
-        return cells.get(point);
     }
 }

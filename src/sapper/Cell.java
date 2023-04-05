@@ -1,7 +1,6 @@
 package sapper;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class Cell {
 
@@ -22,9 +21,7 @@ public class Cell {
     /**
      * Neighbor cells
      */
-    protected ArrayList <Cell> neighborCells = new ArrayList<Cell>();
-
-    public Iterator <Cell> neighboorCellsIt = neighborCells.iterator();
+    public ArrayList <Cell> neighborCells = new ArrayList<Cell>();
 
     /**
      * Neighboring Mines

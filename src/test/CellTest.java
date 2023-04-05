@@ -8,6 +8,7 @@ import sapper.Mine;
 import sapper.State;
 
 import java.awt.*;
+import java.util.Iterator;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -76,8 +77,9 @@ public class CellTest {
 
     @Test
     public void test_openCellWithNumber() {
-        while(cell.neighboorCellsIt.hasNext()){
-            cell.neighboorCellsIt.next().setMine(new Mine());
+        Iterator <Cell> neighborCellIt= cell.neighborCells.iterator();
+        while(neighborCellIt.hasNext()){
+            neighborCellIt.next().setMine(new Mine());
         }
         cell.open();
         int numOfNeighboringMines = cell.getNumOfNeighboringMines();
