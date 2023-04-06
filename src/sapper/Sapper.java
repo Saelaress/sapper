@@ -19,26 +19,28 @@ public class Sapper {
     }
 
     public void decLife() {
-        //не меньше нуля
+        if(life > 0) life -= 1;
     }
 
     public void demine(Cell cell) {
-
+        if(getFlag() > 0) {
+            if(cell.setFlag()) decFlag();
+        }
     }
 
     private void decFlag() {
-
+        if(flag > 0) flag -= 1;
     }
 
     private void incFlag() {
-
+        flag += 1;
     }
 
     public void openCell(Cell cell) {
-
+        cell.open();
     }
 
     public void removeFlag(Cell cell) {
-
+        if(cell.removeFlag()) incFlag();
     }
 }
