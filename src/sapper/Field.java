@@ -1,7 +1,10 @@
 package sapper;
 
+import org.jetbrains.annotations.NotNull;
 import sapper.event.FieldActionEvent;
 import sapper.event.FieldActionListener;
+import sapper.event.MineActionEvent;
+import sapper.event.MineActionListener;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -26,8 +29,10 @@ public class Field {
         setupField();
 
         // Subscribe on mines
-        //TODO
-        //((ExitCell) getCell(exitPoint)).addExitCellActionListener(new ExitCellObserver());
+        Iterator <Cell> minedCellIt = getMinedCells();
+        while (minedCellIt.hasNext()) {
+            minedCellIt.next().addMineActionListener(new mineObserver());
+        }
     }
 
     private void setupField() {
@@ -75,12 +80,18 @@ public class Field {
     }
 
     public boolean areAllEmptyCellsOpen() {
-        //TODO
-        return false;
+        Iterator <Cell> emptyCellIt = getEmptyCells();
+        while(emptyCellIt.hasNext()) {
+            if(emptyCellIt.next().getState() == State.CLOSE) return false;
+        }
+        return true;
     }
 
     public void openMinedCells() {
-        //TODO
+        Iterator <Cell> minedCellIt = getMinedCells();
+        while(minedCellIt.hasNext()) {
+            minedCellIt.next().open();
+        }
     }
 
     private Iterator getMinedCells() {
@@ -110,6 +121,13 @@ public class Field {
     }
 
     // -------------------- События --------------------
+
+    class mineObserver implements MineActionListener {
+        @Override
+        public void mineIsDetonated(@NotNull MineActionEvent event) {
+            fireMineIsDetonated(event.getMine());
+        }
+    }
 
     private ArrayList<FieldActionListener> fieldListListener = new ArrayList<>();
 
