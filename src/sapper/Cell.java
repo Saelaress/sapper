@@ -1,6 +1,7 @@
 package sapper;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Cell {
 
@@ -33,11 +34,16 @@ public class Cell {
     }
 
     private void incNumOfNeighboringMines() {
-
+        numOfNeighboringMines += 1;
     }
 
     private void calcNumberOfNeighboringMines() {
-
+        Iterator<Cell> neighboringCellIt = neighborCells.iterator();
+        while (neighboringCellIt.hasNext()) {
+            if (neighboringCellIt.next().openIfEmpty() == false) {
+                incNumOfNeighboringMines();
+            }
+        }
     }
 
     /**
@@ -50,22 +56,33 @@ public class Cell {
     }
 
     private void setState(State state) {
-
+        this.state = state;
     }
 
     /**
      * Flag
      */
     public boolean setFlag() {
-        return false;
+        if(isFlag()) {
+            return false;
+        }
+        else {
+            setState(State.FLAG);
+            return true;
+        }
     }
 
     private boolean isFlag() {
-        return false;
+        if(getState() == State.FLAG) return true;
+        else return false;
     }
 
     public boolean removeFlag() {
-        return false;
+        if(isFlag()) {
+            setState(State.CLOSE);
+            return true;
+        }
+        else return false;
     }
 
     /**
@@ -76,19 +93,31 @@ public class Cell {
     }
 
     private boolean isOpen() {
-        return false;
+        if(getState() == State.OPEN) return true;
+        else return false;
     }
 
 
     public boolean openIfEmpty() {
-        return false;
+        if(canOpen() == true && isMined() == false) {
+            Iterator <Cell> newNeighboringCellIt = neighborCells.iterator();
+            while(newNeighboringCellIt.hasNext()) {
+                newNeighboringCellIt.next().openIfEmpty();
+            }
+            return true;
+        }
+        else return false;
     }
 
     private boolean canOpen() {
-        return false;
+        if((isOpen() == false && isFlag() == true) || isOpen() == true) {
+            return false;
+        }
+        else return true;
     }
 
     private boolean isMined() {
-        return false;
+        if(mine != null) return true;
+        else return false;
     }
 }

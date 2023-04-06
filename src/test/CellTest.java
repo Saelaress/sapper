@@ -10,8 +10,7 @@ import sapper.State;
 import java.awt.*;
 import java.util.Iterator;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class CellTest {
 
@@ -46,7 +45,7 @@ public class CellTest {
         cell.setFlag();
         assertEquals(State.FLAG, cell.getState());
 
-        cell.removeFlag();
+        assertTrue(cell.removeFlag());
         assertEquals(State.CLOSE, cell.getState());
     }
 
@@ -119,24 +118,24 @@ public class CellTest {
     @Test
     public void test_openIfEmpty_butCellIsMined() {
         cell.setMine(new Mine());
-        cell.openIfEmpty();
 
+        assertFalse(cell.openIfEmpty());
         assertEquals(State.CLOSE, cell.getState());
     }
 
     @Test
     public void test_openIfEmpty_butCellWithFlag() {
         cell.setFlag();
-        cell.openIfEmpty();
 
+        assertFalse(cell.openIfEmpty());
         assertEquals(State.FLAG, cell.getState());
     }
 
     @Test
     public void test_openIfEmpty_EmptyCell() {
         cell.setFlag();
-        cell.openIfEmpty();
 
+        assertTrue(cell.openIfEmpty());
         assertEquals(State.OPEN, cell.getState());
     }
 }
