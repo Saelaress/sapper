@@ -9,8 +9,6 @@ public class Mine {
     }
 
     public void detonate() {
-
+        detonated = true;
     }
-
-    public Mine() {}
 }
