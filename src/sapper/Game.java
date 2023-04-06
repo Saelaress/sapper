@@ -4,9 +4,6 @@ import org.jetbrains.annotations.NotNull;
 import sapper.environments.Environment_generator;
 import sapper.event.FieldActionEvent;
 import sapper.event.FieldActionListener;
-import sapper.event.GameActionListener;
-
-import java.util.ArrayList;
 
 public class Game {
 
@@ -33,15 +30,14 @@ public class Game {
     }
 
     public void init() {
+        buildField();
 
+        // Subscribe on field
+        gameField.addFieldlActionListener(new FieldObserver());
     }
 
     private void buildField() {
         gameField = environment.buildField();
-    }
-
-    public void abort() {
-
     }
 
     public Field getGameField() {
@@ -49,11 +45,18 @@ public class Game {
     }
 
     public Game_status determOutcome() {
-        return Game_status.VICTORY;
+        if(getSapper().getLife() > 0) {
+            game_status = Game_status.VICTORY;
+        }
+        else game_status = Game_status.LOSS;
+        return game_status;
     }
 
     public boolean isPossibleToContinue() {
-        return false;
+        if(!gameField.areAllEmptyCellsOpen() && getSapper().getLife() > 0) {
+            return true;
+        }
+        else return false;
     }
 
     /** Events */
@@ -62,19 +65,19 @@ public class Game {
 
         @Override
         public void mineIsDetonated(@NotNull FieldActionEvent event) {
-
+            getSapper().decLife();
         }
     }
 
-    private ArrayList<GameActionListener> gameActionListeners = new ArrayList<>();
-
-    public void addGameActionListener(@NotNull GameActionListener listener) {
-        gameActionListeners.add(listener);
-    }
-
-    public void removeGameActionListener(@NotNull GameActionListener listener) {
-        gameActionListeners.remove(listener);
-    }
+//    private ArrayList<GameActionListener> gameActionListeners = new ArrayList<>();
+//
+//    public void addGameActionListener(@NotNull GameActionListener listener) {
+//        gameActionListeners.add(listener);
+//    }
+//
+//    public void removeGameActionListener(@NotNull GameActionListener listener) {
+//        gameActionListeners.remove(listener);
+//    }
 
 }
 

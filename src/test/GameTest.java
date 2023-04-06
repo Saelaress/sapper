@@ -29,7 +29,6 @@ public class GameTest {
     public void testSetup() {
         eventCount = 0;
         game = new Game(new TestEnvironment_generator(), new Sapper(3, 3));
-        game.addGameActionListener(new EventListener());
     }
 
     @Test
