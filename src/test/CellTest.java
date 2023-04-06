@@ -54,7 +54,7 @@ public class CellTest {
         cell.setFlag();
         cell.open();
 
-        assertEquals(State.CLOSE, cell.getState());
+        assertEquals(State.FLAG, cell.getState());
     }
 
     @Test
@@ -133,9 +133,52 @@ public class CellTest {
 
     @Test
     public void test_openIfEmpty_EmptyCell() {
-        cell.setFlag();
-
         assertTrue(cell.openIfEmpty());
         assertEquals(State.OPEN, cell.getState());
+    }
+
+    @Test
+    public void test_openEmptyCell_2() {
+        Field bigField = new Field(4, 4);
+        Cell minedCell1 = bigField.getCell(new Point(1,3));
+        Cell minedCell2 = bigField.getCell(new Point(2,2));
+        Cell minedCell3 = bigField.getCell(new Point(3,1));
+        minedCell1.setMine(new Mine());
+        minedCell2.setMine(new Mine());
+        minedCell3.setMine(new Mine());
+        Cell newCell = bigField.getCell(new Point(0,0));
+        newCell.open();
+
+        //Пустые ячейки
+        assertEquals(State.OPEN, bigField.getCell(new Point(0, 0)).getState());
+        assertEquals(0, bigField.getCell(new Point(0, 0)).getNumOfNeighboringMines());
+        assertEquals(State.OPEN, bigField.getCell(new Point(1, 0)).getState());
+        assertEquals(0, bigField.getCell(new Point(1, 0)).getNumOfNeighboringMines());
+        assertEquals(State.OPEN, bigField.getCell(new Point(0, 1)).getState());
+        assertEquals(0, bigField.getCell(new Point(0, 1)).getNumOfNeighboringMines());
+
+        //Ячейки с цифрами
+        assertEquals(State.OPEN, bigField.getCell(new Point(0, 2)).getState());
+        assertEquals(1, bigField.getCell(new Point(0, 2)).getNumOfNeighboringMines());
+        assertEquals(State.OPEN, bigField.getCell(new Point(2, 0)).getState());
+        assertEquals(1, bigField.getCell(new Point(2, 0)).getNumOfNeighboringMines());
+        assertEquals(State.OPEN, bigField.getCell(new Point(1, 1)).getState());
+        assertEquals(1, bigField.getCell(new Point(1, 1)).getNumOfNeighboringMines());
+        assertEquals(State.OPEN, bigField.getCell(new Point(1, 2)).getState());
+        assertEquals(2, bigField.getCell(new Point(1, 2)).getNumOfNeighboringMines());
+        assertEquals(State.OPEN, bigField.getCell(new Point(2, 1)).getState());
+        assertEquals(2, bigField.getCell(new Point(2, 1)).getNumOfNeighboringMines());
+
+        //Заминироваанные ячейки
+        assertEquals(State.CLOSE, minedCell1.getState());
+        assertEquals(State.CLOSE, minedCell2.getState());
+        assertEquals(State.CLOSE, minedCell3.getState());
+
+        //Пустые закрытые ячейки
+        assertEquals(State.CLOSE, bigField.getCell(new Point(0, 3)).getState());
+        assertEquals(State.CLOSE, bigField.getCell(new Point(3, 0)).getState());
+        assertEquals(State.CLOSE, bigField.getCell(new Point(3, 2)).getState());
+        assertEquals(State.CLOSE, bigField.getCell(new Point(3, 3)).getState());
+        assertEquals(State.CLOSE, bigField.getCell(new Point(2, 3)).getState());
     }
 }

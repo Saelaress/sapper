@@ -4,7 +4,7 @@ import sapper.event.MineActionEvent;
 import sapper.event.MineActionListener;
 
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.ListIterator;
 
 public class Cell {
 
@@ -41,10 +41,15 @@ public class Cell {
     }
 
     private void calcNumberOfNeighboringMines() {
-        Iterator<Cell> neighboringCellIt = neighborCells.iterator();
+        ListIterator<Cell> neighboringCellIt = neighborCells.listIterator();
         while (neighboringCellIt.hasNext()) {
-            if (neighboringCellIt.next().openIfEmpty() == false) {
+            if (neighboringCellIt.next().isMined() == true) {
                 incNumOfNeighboringMines();
+            }
+        }
+        if(numOfNeighboringMines == 0) {
+            while (neighboringCellIt.hasPrevious()) {
+                neighboringCellIt.previous().openIfEmpty();
             }
         }
     }
@@ -52,7 +57,7 @@ public class Cell {
     /**
      * sapper.State
      */
-    private State state;
+    private State state = State.CLOSE;
 
     public State getState() {
         return state;
@@ -92,7 +97,17 @@ public class Cell {
      * Opening and checking
      */
     public boolean open() {
-        return false;
+        if(canOpen()) {
+            if(isMined()) {
+                mine.detonate();
+                setState(State.OPEN);
+                return true;
+            }
+            setState(State.OPEN);
+            calcNumberOfNeighboringMines();
+            return true;
+        }
+        else return false;
     }
 
     private boolean isOpen() {
@@ -103,10 +118,8 @@ public class Cell {
 
     public boolean openIfEmpty() {
         if(canOpen() == true && isMined() == false) {
-            Iterator <Cell> newNeighboringCellIt = neighborCells.iterator();
-            while(newNeighboringCellIt.hasNext()) {
-                newNeighboringCellIt.next().openIfEmpty();
-            }
+            setState(State.OPEN);
+            calcNumberOfNeighboringMines();
             return true;
         }
         else return false;
