@@ -37,17 +37,17 @@ public class SapperTest {
         sapper.openCell(emptyCell);
 
         assertEquals(State.OPEN, emptyCell.getState());
-        assertEquals(State.OPEN, game.getGameField().getCell(new Point(1,0)));
+        assertEquals(State.OPEN, game.getGameField().getCell(new Point(1,0)).getState());
         assertEquals(1, game.getGameField().getCell(new Point(1,0)).getNumOfNeighboringMines());
-        assertEquals(State.OPEN, game.getGameField().getCell(new Point(0,1)));
+        assertEquals(State.OPEN, game.getGameField().getCell(new Point(0,1)).getState());
         assertEquals(1, game.getGameField().getCell(new Point(0,1)).getNumOfNeighboringMines());
-        assertEquals(State.OPEN, game.getGameField().getCell(new Point(1,1)));
+        assertEquals(State.OPEN, game.getGameField().getCell(new Point(1,1)).getState());
         assertEquals(3, game.getGameField().getCell(new Point(1,1)).getNumOfNeighboringMines());
-        assertEquals(State.CLOSE, game.getGameField().getCell(new Point(2,0)));
-        assertEquals(State.CLOSE, game.getGameField().getCell(new Point(2,1)));
-        assertEquals(State.CLOSE, game.getGameField().getCell(new Point(2,2)));
-        assertEquals(State.CLOSE, game.getGameField().getCell(new Point(1,2)));
-        assertEquals(State.CLOSE, game.getGameField().getCell(new Point(0,2)));
+        assertEquals(State.CLOSE, game.getGameField().getCell(new Point(2,0)).getState());
+        assertEquals(State.CLOSE, game.getGameField().getCell(new Point(2,1)).getState());
+        assertEquals(State.CLOSE, game.getGameField().getCell(new Point(2,2)).getState());
+        assertEquals(State.CLOSE, game.getGameField().getCell(new Point(1,2)).getState());
+        assertEquals(State.CLOSE, game.getGameField().getCell(new Point(0,2)).getState());
     }
 
     @Test
@@ -57,14 +57,14 @@ public class SapperTest {
 
         assertEquals(State.OPEN, numberCell.getState());
         assertEquals(2, numberCell.getNumOfNeighboringMines());
-        assertEquals(State.CLOSE, game.getGameField().getCell(new Point(1,0)));
-        assertEquals(State.CLOSE, game.getGameField().getCell(new Point(0,1)));
-        assertEquals(State.CLOSE, game.getGameField().getCell(new Point(1,1)));
-        assertEquals(State.CLOSE, game.getGameField().getCell(new Point(2,0)));
-        assertEquals(State.CLOSE, game.getGameField().getCell(new Point(0,0)));
-        assertEquals(State.CLOSE, game.getGameField().getCell(new Point(2,2)));
-        assertEquals(State.CLOSE, game.getGameField().getCell(new Point(1,2)));
-        assertEquals(State.CLOSE, game.getGameField().getCell(new Point(0,2)));
+        assertEquals(State.CLOSE, game.getGameField().getCell(new Point(1,0)).getState());
+        assertEquals(State.CLOSE, game.getGameField().getCell(new Point(0,1)).getState());
+        assertEquals(State.CLOSE, game.getGameField().getCell(new Point(1,1)).getState());
+        assertEquals(State.CLOSE, game.getGameField().getCell(new Point(2,0)).getState());
+        assertEquals(State.CLOSE, game.getGameField().getCell(new Point(0,0)).getState());
+        assertEquals(State.CLOSE, game.getGameField().getCell(new Point(2,2)).getState());
+        assertEquals(State.CLOSE, game.getGameField().getCell(new Point(1,2)).getState());
+        assertEquals(State.CLOSE, game.getGameField().getCell(new Point(0,2)).getState());
     }
 
     @Test
@@ -73,21 +73,21 @@ public class SapperTest {
         sapper.openCell(minedCell);
 
         assertEquals(State.OPEN, minedCell.getState());
-        assertEquals(State.CLOSE, game.getGameField().getCell(new Point(0,0)));
-        assertEquals(State.CLOSE, game.getGameField().getCell(new Point(1,0)));
-        assertEquals(State.CLOSE, game.getGameField().getCell(new Point(0,1)));
-        assertEquals(State.CLOSE, game.getGameField().getCell(new Point(1,1)));
-        assertEquals(State.CLOSE, game.getGameField().getCell(new Point(2,0)));
-        assertEquals(State.CLOSE, game.getGameField().getCell(new Point(2,1)));
-        assertEquals(State.CLOSE, game.getGameField().getCell(new Point(1,2)));
-        assertEquals(State.CLOSE, game.getGameField().getCell(new Point(0,2)));
+        assertEquals(State.CLOSE, game.getGameField().getCell(new Point(0,0)).getState());
+        assertEquals(State.CLOSE, game.getGameField().getCell(new Point(1,0)).getState());
+        assertEquals(State.CLOSE, game.getGameField().getCell(new Point(0,1)).getState());
+        assertEquals(State.CLOSE, game.getGameField().getCell(new Point(1,1)).getState());
+        assertEquals(State.CLOSE, game.getGameField().getCell(new Point(2,0)).getState());
+        assertEquals(State.CLOSE, game.getGameField().getCell(new Point(2,1)).getState());
+        assertEquals(State.CLOSE, game.getGameField().getCell(new Point(1,2)).getState());
+        assertEquals(State.CLOSE, game.getGameField().getCell(new Point(0,2)).getState());
         assertEquals(2, game.getSapper().getLife());
     }
 
     @Test
     public void test_removeFlagFromCellWithFlag() {
         Cell flagCell = game.getGameField().getCell(new Point(2,2));
-        flagCell.setFlag();
+        sapper.demine(flagCell);
         assertEquals(2, game.getSapper().getFlag());
 
         sapper.removeFlag(flagCell);

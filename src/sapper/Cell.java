@@ -76,6 +76,7 @@ public class Cell {
         }
         else {
             setState(State.FLAG);
+
             return true;
         }
     }
