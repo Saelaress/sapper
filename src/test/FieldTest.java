@@ -22,6 +22,10 @@ public class FieldTest {
         public void mineIsDetonated(@NotNull FieldActionEvent event) {
             eventCount += 1;
         }
+
+        @Override
+        public void cellIsOpen(@NotNull FieldActionEvent event) {
+        }
     }
 
     private Field field;

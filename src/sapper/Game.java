@@ -50,7 +50,10 @@ public class Game {
         if(getSapper().getLife() > 0) {
             game_status = Game_status.VICTORY;
         }
-        else game_status = Game_status.LOSS;
+        else {
+            game_status = Game_status.LOSS;
+            getGameField().openMinedCells();
+        }
         return game_status;
     }
 
@@ -69,17 +72,15 @@ public class Game {
         public void mineIsDetonated(@NotNull FieldActionEvent event) {
             getSapper().decLife();
         }
+
+        @Override
+        public void cellIsOpen(@NotNull FieldActionEvent event) {
+            if(!isPossibleToContinue()) {
+                determOutcome();
+            }
+        }
+
+
     }
-
-//    private ArrayList<GameActionListener> gameActionListeners = new ArrayList<>();
-//
-//    public void addGameActionListener(@NotNull GameActionListener listener) {
-//        gameActionListeners.add(listener);
-//    }
-//
-//    public void removeGameActionListener(@NotNull GameActionListener listener) {
-//        gameActionListeners.remove(listener);
-//    }
-
 }
 

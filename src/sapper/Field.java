@@ -1,10 +1,7 @@
 package sapper;
 
 import org.jetbrains.annotations.NotNull;
-import sapper.event.FieldActionEvent;
-import sapper.event.FieldActionListener;
-import sapper.event.MineActionEvent;
-import sapper.event.MineActionListener;
+import sapper.event.*;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -27,13 +24,6 @@ public class Field {
         this.height = height;
 
         setupField();
-
-//        // Subscribe on mines
-//        MineObserver observer = new MineObserver();
-//        Iterator <Cell> minedCellIt = getMinedCells();
-//        while (minedCellIt.hasNext()) {
-//            minedCellIt.next().addMineActionListener(observer);
-//        }
     }
 
     public void subscribeOnMines() {
@@ -49,6 +39,10 @@ public class Field {
             for(int x = 0; x < width; ++x) {
                 Point p = new Point(x, y);
                 Cell cell =  new Cell();
+
+                //Подписываемся на ячейку
+                CellObserver observer = new CellObserver();
+                cell.addCellActionListener(observer);
 
                 if(x > 0) {
                     Cell neighboorCellEast = getCell(new Point((int) (p.getX() - 1), (int) p.getY()));
@@ -138,6 +132,29 @@ public class Field {
         }
     }
 
+    private void fireMineIsDetonated(Mine mine) {
+        for(FieldActionListener listener: fieldListListener) {
+            FieldActionEvent event = new FieldActionEvent(listener);
+            event.setMine(mine);
+            listener.mineIsDetonated(event);
+        }
+    }
+
+    private class CellObserver implements CellActionListener {
+        @Override
+        public void cellIsOpen(@NotNull CellActionEvent event) {
+            fireCellIsOpen(event.getCell());
+        }
+    }
+
+    private void fireCellIsOpen(Cell cell) {
+        for(FieldActionListener listener: fieldListListener) {
+            FieldActionEvent event = new FieldActionEvent(listener);
+            event.setCell(cell);
+            listener.cellIsOpen(event);
+        }
+    }
+
     private ArrayList<FieldActionListener> fieldListListener = new ArrayList<>();
 
     public void addFieldlActionListener(FieldActionListener listener) {
@@ -146,13 +163,5 @@ public class Field {
 
     public void removeFieldCellActionListener(FieldActionListener listener) {
         fieldListListener.remove(listener);
-    }
-
-    private void fireMineIsDetonated(Mine mine) {
-        for(FieldActionListener listener: fieldListListener) {
-            FieldActionEvent event = new FieldActionEvent(listener);
-            event.setMine(mine);
-            listener.mineIsDetonated(event);
-        }
     }
 }

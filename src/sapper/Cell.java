@@ -1,7 +1,7 @@
 package sapper;
 
-import sapper.event.MineActionEvent;
-import sapper.event.MineActionListener;
+import sapper.event.CellActionEvent;
+import sapper.event.CellActionListener;
 
 import java.util.ArrayList;
 import java.util.ListIterator;
@@ -102,10 +102,13 @@ public class Cell {
             if(isMined()) {
                 mine.detonate();
                 setState(State.OPEN);
+                fireCellIsOpen(this);
                 return true;
             }
             setState(State.OPEN);
             calcNumberOfNeighboringMines();
+            //ячейка открыта - событие
+            fireCellIsOpen(this);
             return true;
         }
         else return false;
@@ -139,21 +142,22 @@ public class Cell {
     }
 
     // -------------------- События --------------------
-    private ArrayList<MineActionListener> mineListListener = new ArrayList<>();
+    private ArrayList<CellActionListener> cellListListener = new ArrayList<>();
 
-    public void addMineActionListener(MineActionListener listener) {
-        mineListListener.add(listener);
+    public void addCellActionListener(CellActionListener listener) {
+        cellListListener.add(listener);
     }
 
-    public void removeExitCellActionListener(MineActionListener listener) {
-        mineListListener.remove(listener);
+    public void removeCellActionListener(CellActionListener listener) {
+        cellListListener.remove(listener);
     }
-
-    private void mineIsDetonated(Mine mine) {
-        for(MineActionListener listener: mineListListener) {
-            MineActionEvent event = new MineActionEvent(listener);
-            event.setMine(mine);
-            listener.mineIsDetonated(event);
+    private void fireCellIsOpen(Cell cell) {
+        for(CellActionListener listener: cellListListener) {
+            CellActionEvent event = new CellActionEvent(listener);
+            event.setCell(cell);
+            listener.cellIsOpen(event);
         }
     }
+
+
 }
