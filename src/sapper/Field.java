@@ -28,10 +28,19 @@ public class Field {
 
         setupField();
 
-        // Subscribe on mines
+//        // Subscribe on mines
+//        MineObserver observer = new MineObserver();
+//        Iterator <Cell> minedCellIt = getMinedCells();
+//        while (minedCellIt.hasNext()) {
+//            minedCellIt.next().addMineActionListener(observer);
+//        }
+    }
+
+    public void subscribeOnMines() {
+        MineObserver observer = new MineObserver();
         Iterator <Cell> minedCellIt = getMinedCells();
         while (minedCellIt.hasNext()) {
-            minedCellIt.next().addMineActionListener(new mineObserver());
+            minedCellIt.next().getMine().addMineActionListener(observer);
         }
     }
 
@@ -122,7 +131,7 @@ public class Field {
 
     // -------------------- События --------------------
 
-    class mineObserver implements MineActionListener {
+    private class MineObserver implements MineActionListener {
         @Override
         public void mineIsDetonated(@NotNull MineActionEvent event) {
             fireMineIsDetonated(event.getMine());

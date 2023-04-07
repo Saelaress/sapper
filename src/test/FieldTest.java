@@ -3,12 +3,10 @@ package test;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import sapper.Cell;
-import sapper.Field;
-import sapper.Mine;
-import sapper.State;
+import sapper.*;
 import sapper.event.FieldActionEvent;
 import sapper.event.FieldActionListener;
+import test.environment_generator.TestEnvironment_generator;
 
 import java.awt.*;
 import java.util.Iterator;
@@ -30,9 +28,7 @@ public class FieldTest {
 
     @BeforeEach
     public void testSetup() {
-        eventCount = 0;
         field = new Field(2, 2);
-        field.addFieldlActionListener(new FieldObserver());
     }
 
     @Test
@@ -90,10 +86,10 @@ public class FieldTest {
 
         field.openMinedCells();
 
-        assertEquals(State.OPEN, field.getCell(new Point(0,0)));
-        assertEquals(State.CLOSE, field.getCell(new Point(0,1)));
-        assertEquals(State.CLOSE, field.getCell(new Point(1,0)));
-        assertEquals(State.OPEN, field.getCell(new Point(1,1)));
+        assertEquals(State.OPEN, field.getCell(new Point(0,0)).getState());
+        assertEquals(State.CLOSE, field.getCell(new Point(0,1)).getState());
+        assertEquals(State.CLOSE, field.getCell(new Point(1,0)).getState());
+        assertEquals(State.OPEN, field.getCell(new Point(1,1)).getState());
     }
 
     @Test
@@ -128,10 +124,15 @@ public class FieldTest {
 
     @Test
     public void test_openMinedCellEvent() {
+        eventCount = 0;
+        Game game = new Game(new TestEnvironment_generator(), new Sapper(3, 3));
+        Field newfield = game.getGameField();
+        newfield.addFieldlActionListener(new FieldObserver());
+
         int expectedEventCount = 2;
 
-        field.getCell(new Point(0, 0)).setMine(new Mine());
-        field.getCell(new Point(1, 1)).setMine(new Mine());
+        newfield.getCell(new Point(0, 2)).open();
+        newfield.getCell(new Point(2, 0)).open();
 
         assertEquals(expectedEventCount, eventCount);
     }

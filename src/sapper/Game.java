@@ -38,6 +38,8 @@ public class Game {
 
     private void buildField() {
         gameField = environment.buildField();
+        //Subscribe on mines
+        gameField.subscribeOnMines();
     }
 
     public Field getGameField() {

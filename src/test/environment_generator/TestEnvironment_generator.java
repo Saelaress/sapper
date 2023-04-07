@@ -14,10 +14,11 @@ public class TestEnvironment_generator extends Environment_generator {
     protected void addMines() {
         Mine firstMine = new Mine();
         Mine secondMine = new Mine();
+        Mine thirdMine = new Mine();
 
         field.getCell(new Point(0,2)).setMine(firstMine);
         field.getCell(new Point(2,0)).setMine(secondMine);
-        field.getCell(new Point(2,2)).setMine(secondMine);
+        field.getCell(new Point(2,2)).setMine(thirdMine);
     }
 
     @Override
