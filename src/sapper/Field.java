@@ -143,14 +143,15 @@ public class Field {
     private class CellObserver implements CellActionListener {
         @Override
         public void cellIsOpen(@NotNull CellActionEvent event) {
-            fireCellIsOpen(event.getCell());
+            fireCellIsOpen(event.getCell(), event.getMined());
         }
     }
 
-    private void fireCellIsOpen(Cell cell) {
+    private void fireCellIsOpen(Cell cell, boolean isMined) {
         for(FieldActionListener listener: fieldListListener) {
             FieldActionEvent event = new FieldActionEvent(listener);
             event.setCell(cell);
+            event.setMined(isMined);
             listener.cellIsOpen(event);
         }
     }

@@ -7,6 +7,7 @@ import sapper.Mine;
 public class FieldActionEvent {
     private Mine mine;
     private Cell cell;
+    private boolean isMined;
 
     public void setMine(@NotNull Mine mine) {
         this.mine = mine;
@@ -20,6 +21,9 @@ public class FieldActionEvent {
     public Cell getCell() {
         return cell;
     }
+    public void setMined(boolean isMined) { this.isMined = isMined; }
+    public boolean getMined() { return isMined; }
+
 
     /**
      * Constructs a prototypical Event.

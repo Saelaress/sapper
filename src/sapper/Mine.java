@@ -25,10 +25,6 @@ public class Mine {
         mineListListener.add(listener);
     }
 
-    public void removeExitCellActionListener(MineActionListener listener) {
-        mineListListener.remove(listener);
-    }
-
     private void fireMineIsDetonated(Mine mine) {
         for(MineActionListener listener: mineListListener) {
             MineActionEvent event = new MineActionEvent(listener);

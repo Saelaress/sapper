@@ -99,16 +99,18 @@ public class Cell {
      */
     public boolean open() {
         if(canOpen()) {
-            if(isMined()) {
-                mine.detonate();
+            if(!isOpen()) {
+                if(isMined()) {
+                    mine.detonate();
+                    setState(State.OPEN);
+                    fireCellIsOpen(this, true);
+                    return true;
+                }
                 setState(State.OPEN);
-                fireCellIsOpen(this);
-                return true;
+                calcNumberOfNeighboringMines();
+                //ячейка открыта - событие
+                fireCellIsOpen(this, false);
             }
-            setState(State.OPEN);
-            calcNumberOfNeighboringMines();
-            //ячейка открыта - событие
-            fireCellIsOpen(this);
             return true;
         }
         else return false;
@@ -151,13 +153,12 @@ public class Cell {
     public void removeCellActionListener(CellActionListener listener) {
         cellListListener.remove(listener);
     }
-    private void fireCellIsOpen(Cell cell) {
+    private void fireCellIsOpen(Cell cell, boolean isMined) {
         for(CellActionListener listener: cellListListener) {
             CellActionEvent event = new CellActionEvent(listener);
             event.setCell(cell);
+            event.setMined(isMined);
             listener.cellIsOpen(event);
         }
     }
-
-
 }

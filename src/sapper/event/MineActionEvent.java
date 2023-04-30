@@ -1,12 +1,14 @@
 package sapper.event;
 
 import org.jetbrains.annotations.NotNull;
+import sapper.Cell;
 import sapper.Mine;
 
 import java.util.EventObject;
 
 public class MineActionEvent extends EventObject {
     private Mine mine;
+    private Cell cell;
 
     public void setMine(@NotNull Mine mine) {
         this.mine = mine;
@@ -14,6 +16,14 @@ public class MineActionEvent extends EventObject {
 
     public Mine getMine() {
         return mine;
+    }
+
+    public void setCell(@NotNull Cell cell) {
+        this.cell = cell;
+    }
+
+    public Cell getCell() {
+        return cell;
     }
 
     /**
