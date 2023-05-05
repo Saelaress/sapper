@@ -3,7 +3,8 @@ package sapper.event;
 import org.jetbrains.annotations.NotNull;
 import sapper.Cell;
 import sapper.Game_status;
-
+import sapper.Mine;
+import sapper.Sapper;
 import java.util.EventObject;
 
 public class GameActionEvent extends EventObject {
@@ -15,6 +16,9 @@ public class GameActionEvent extends EventObject {
 //    public Sapper getSapper() {
 //        return sapper;
 //    }
+
+    private Sapper sapper;
+    private Mine mine;
 
     private Game_status status;
     private Cell cell;
@@ -33,6 +37,13 @@ public class GameActionEvent extends EventObject {
     }
     public void setMined(boolean isMined) { this.isMined = isMined; }
     public boolean getMined() { return isMined; }
+
+    public void setMine(@NotNull Mine mine) {
+        this.mine = mine;
+    }
+    public Mine getMine() {
+        return mine;
+    }
 
     /**
      * Constructs a prototypical Event.

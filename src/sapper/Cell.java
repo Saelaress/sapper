@@ -71,7 +71,7 @@ public class Cell {
      * Flag
      */
     public boolean setFlag() {
-        if(isFlag()) {
+        if(isFlag() || isOpen()) {
             return false;
         }
         else {
@@ -138,7 +138,7 @@ public class Cell {
         else return true;
     }
 
-    private boolean isMined() {
+    public boolean isMined() {
         if(mine != null) return true;
         else return false;
     }

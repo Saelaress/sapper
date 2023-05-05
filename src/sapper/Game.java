@@ -31,6 +31,7 @@ public class Game {
     }
 
     public void init() {
+        game_status = Game_status.PLAYED;
         buildField();
 
         // Subscribe on field
@@ -55,7 +56,6 @@ public class Game {
             game_status = Game_status.LOSS;
             getGameField().openMinedCells();
         }
-        fireGameStatusChanged(game_status);
         return game_status;
     }
 
@@ -67,19 +67,20 @@ public class Game {
     }
 
     /** Events */
-    private void fireGameStatusChanged(Game_status status) {
-        for(GameActionListener listener: gameListListener) {
-            GameActionEvent event = new GameActionEvent(listener);
-            event.setStatus(status);
-            listener.gameStatusChanged(event);
-        }
-    }
-
     private class FieldObserver implements FieldActionListener {
 
         @Override
         public void mineIsDetonated(@NotNull FieldActionEvent event) {
             getSapper().decLife();
+            fireMineIsDetonated(event.getMine());
+        }
+
+        private void fireMineIsDetonated(Mine mine) {
+            for(GameActionListener listener: gameListListener) {
+                GameActionEvent event = new GameActionEvent(listener);
+                event.setMine(mine);
+                listener.mineIsDetonated(event);
+            }
         }
 
         @Override
@@ -87,21 +88,11 @@ public class Game {
             if(!isPossibleToContinue()) {
                 determOutcome();
             }
-            fireCellIsOpen(event.getCell(), event.getMined());
-        }
-    }
-
-    private void fireCellIsOpen(Cell cell, boolean isMined) {
-        for(GameActionListener listener: gameListListener) {
-            GameActionEvent event = new GameActionEvent(listener);
-            event.setCell(cell);
-            event.setMined(isMined);
-            listener.cellIsOpen(event);
         }
     }
 
     private ArrayList<GameActionListener> gameListListener = new ArrayList<>();
-
+	
     public void addGameActionListener(GameActionListener listener) {
         gameListListener.add(listener);
     }
