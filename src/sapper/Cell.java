@@ -13,12 +13,19 @@ public class Cell {
      */
     private Mine mine;
 
+    private boolean isEmpty = true;
+
     public Mine getMine() {
         return mine;
     }
 
     public void setMine(Mine mine) {
         this.mine = mine;
+        isEmpty = false;
+    }
+
+    public boolean isEmpty() {
+        return isEmpty;
     }
 
 

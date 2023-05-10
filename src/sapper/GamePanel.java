@@ -37,6 +37,15 @@ public class GamePanel extends JFrame {
         Sapper sapper = new Sapper(2, 3);
         game = new Game(new EnvironmentSecond(), sapper);
         game.addGameActionListener(new GameObserver());
+//        EnvironmentRandom environmentRandom = new EnvironmentRandom();
+//        int height = 5;
+//        int width = 7;
+//        environmentRandom.setFieldParam(height, width);
+//        environmentRandom.buildField();
+//        int countMine = Math.min(height, width);
+//        game = new Game(environmentRandom, new Sapper(countMine, Math.min(1, countMine-3)));
+//
+//        game.addGameActionListener(new GameObserver());
     }
 
     private void initLabel(){

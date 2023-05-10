@@ -1,5 +1,6 @@
 package test.environment_generator;
 
+import sapper.Field;
 import sapper.Mine;
 import sapper.environments.Environment_generator;
 
@@ -9,6 +10,15 @@ public class TestEnvironment_generator extends Environment_generator {
 
     private static final int FIELD_HEIGHT = 3;
     private static final int FIELD_WIDTH = 3;
+
+    @Override
+    public Field buildField() {
+        field = new Field(fieldWidth(), fieldHeight());
+
+        addMines();
+
+        return field;
+    }
 
     @Override
     protected void addMines() {

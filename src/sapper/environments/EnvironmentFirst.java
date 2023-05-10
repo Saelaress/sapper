@@ -1,5 +1,6 @@
 package sapper.environments;
 
+import sapper.Field;
 import sapper.Mine;
 
 import java.awt.*;
@@ -8,6 +9,16 @@ public class EnvironmentFirst extends Environment_generator{
 
     private static final int FIELD_HEIGHT = 5;
     private static final int FIELD_WIDTH = 5;
+
+    @Override
+    public Field buildField() {
+
+        field = new Field(fieldWidth(), fieldHeight());
+
+        addMines();
+
+        return field;
+    }
 
     @Override
     protected void addMines() {
