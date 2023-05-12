@@ -13,7 +13,7 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.util.Objects;
 
-public class GamePanel extends JFrame {
+public class GamePanell extends JFrame {
     private Game game;
 
     private JPanel fieldWidget;
@@ -21,10 +21,10 @@ public class GamePanel extends JFrame {
     private final int CELL_SIZE = 60;
 
     public static void main(String[] args) {
-        new GamePanel();
+        new GamePanell();
     }
 
-    private GamePanel(){
+    private GamePanell(){
         startGame();
 //        setImages();
         initLabel();
