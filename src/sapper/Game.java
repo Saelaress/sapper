@@ -49,12 +49,15 @@ public class Game {
     }
 
     public Game_status determOutcome() {
-        if(getSapper().getLife() > 0) {
-            game_status = Game_status.VICTORY;
-        }
-        else {
-            game_status = Game_status.LOSS;
-            getGameField().openMinedCells();
+        if (game_status != Game_status.VICTORY && game_status != Game_status.LOSS) {
+            if(getSapper().getLife() > 0) {
+                game_status = Game_status.VICTORY;
+            }
+            else {
+                game_status = Game_status.LOSS;
+                getGameField().openMinedCells();
+            }
+            fireGameStatusChanged(game_status);
         }
         return game_status;
     }
@@ -67,6 +70,14 @@ public class Game {
     }
 
     /** Events */
+
+    public void fireGameStatusChanged(Game_status status) {
+        for(GameActionListener listener: gameListListener) {
+            GameActionEvent event = new GameActionEvent(listener);
+            event.setStatus(status);
+            listener.gameStatusChanged(event);
+        }
+    }
     private class FieldObserver implements FieldActionListener {
 
         @Override

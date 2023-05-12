@@ -19,7 +19,6 @@ public class GameActionEvent extends EventObject {
 
     private Sapper sapper;
     private Mine mine;
-
     private Game_status status;
     private Cell cell;
     private boolean isMined;

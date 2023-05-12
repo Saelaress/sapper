@@ -1,10 +1,12 @@
 package sapper;
 
 import org.jetbrains.annotations.NotNull;
+import sapper.environments.EnvironmentRandom;
 import sapper.environments.EnvironmentSecond;
 import sapper.event.GameActionEvent;
 import sapper.event.GameActionListener;
 import sapper.ui.FieldWidget;
+import sapper.ui.GameInfoPanel;
 import sapper.ui.GameWidget;
 
 import javax.swing.*;
@@ -18,43 +20,59 @@ public class Main {
 
     static class GamePanel extends JFrame {
         private Game game;
-
-        private JLabel label;
-
+        private Sapper sapper;
+        private JMenuBar menu = null;
+        private final String fileItems[] = new String []{"Новая игра", "Выход"};
         private GameWidget gameWidget;
+
         public GamePanel() throws HeadlessException {
             setTitle("Сапёр");
             setVisible(true);
             ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource("ui/img/mine.png")));
             setIconImage(icon.getImage());
 
-            Sapper sapper = new Sapper(2, 3);
-            game = new Game(new EnvironmentSecond(), sapper);
-            gameWidget = new GameWidget(game);
-
-            game.addGameActionListener(new GameController());
+            startGame();
 
             JPanel content = (JPanel) this.getContentPane();
             FieldWidget fieldWidget = new FieldWidget(game.getGameField());
+            gameWidget = new GameWidget(game);
             gameWidget.setFieldWidget(fieldWidget);
-
+            GameInfoPanel gameInfoPanel = new GameInfoPanel(sapper, this.getWidth());
+            gameWidget.setGameInfoPanel(gameInfoPanel);
             gameWidget.setListenerField();
+
+            content.add(gameInfoPanel, BorderLayout.NORTH);
             content.add(gameWidget);
             content.add(fieldWidget);
-
-            initLabel();
 
             pack();
             setResizable(false);
             setDefaultCloseOperation(EXIT_ON_CLOSE);
         }
 
-        private void initLabel(){
-            label = new JLabel("Начните игру!");
-            add(label, BorderLayout.SOUTH);
+        private void startGame(){
+            sapper = new Sapper(3, 7);
+            EnvironmentRandom env = new EnvironmentRandom();
+            env.setFieldParam(7,7);
+            game = new Game(env, sapper);
+
+            game.addGameActionListener(new GameController());
         }
 
         private final class GameController implements GameActionListener {
+
+            @Override
+            public void gameStatusChanged(@NotNull GameActionEvent event) {
+                gameWidget.getFieldWidget().repaint();
+                switch (event.getStatus()){
+                    case LOSS:
+                        JOptionPane.showMessageDialog(GamePanel.this, "Вы проиграли! ");
+                        break;
+                    case VICTORY:
+                        JOptionPane.showMessageDialog(GamePanel.this, "Вы победили! ");
+                        break;
+                }
+            }
 
             @Override
             public void mineIsDetonated(@NotNull GameActionEvent event) {}

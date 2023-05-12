@@ -10,6 +10,8 @@ public class GameWidget extends JPanel {
     private final Game game;
     private FieldWidget fieldWidget;
 
+    private GameInfoPanel gameInfoPanel;
+
     public GameWidget(Game game){
         this.game = game;
 
@@ -28,6 +30,13 @@ public class GameWidget extends JPanel {
         this.fieldWidget = fw;
     }
 
+    public GameInfoPanel getGameInfoPanel(){
+        return gameInfoPanel;
+    }
+    public void setGameInfoPanel(GameInfoPanel gp){
+        this.gameInfoPanel = gp;
+    }
+
     private class MouseController implements MouseListener {
         @Override
         public void mousePressed(MouseEvent e) {
@@ -36,23 +45,17 @@ public class GameWidget extends JPanel {
                 int x = e.getX() / CellWidget.CELL_SIZE;
                 int y = e.getY() / CellWidget.CELL_SIZE;
                 Cell activeCell = game.getGameField().getCell(new Point(x, y));
-//                CellWidget cw = fieldWidget.getCellWidget(game.getGameField().getCell(new Point(x, y)));
                 if (e.getButton() == MouseEvent.BUTTON1) {
-                    System.out.print("L");
                     game.getSapper().openCell(activeCell);
                 }
                 if (e.getButton() == MouseEvent.BUTTON3) {
-                    System.out.print("R");
-
                     if (activeCell.getState() == State.FLAG) {
                         game.getSapper().removeFlag(activeCell);
                     } else game.getSapper().demine(activeCell);
                 }
             }
-            if(e.getButton() == MouseEvent.BUTTON2) {
-//                startGame();
-            }
             fieldWidget.repaint();
+            gameInfoPanel.repaint();
         }
 
         @Override

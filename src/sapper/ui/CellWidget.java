@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 import java.util.Objects;
 
 public class CellWidget extends JPanel {
-    public static final int CELL_SIZE = 80;
+    public static final int CELL_SIZE = 60;
     Cell cell;
     boolean isLight;
 
@@ -86,5 +86,9 @@ public class CellWidget extends JPanel {
         String filename = "img/" + name + ".png";
         ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource(filename)));
         return icon.getImage();
+    }
+
+    public int getCellSize() {
+        return CELL_SIZE;
     }
 }
