@@ -30,7 +30,8 @@ public class Field {
         MineObserver observer = new MineObserver();
         Iterator <Cell> minedCellIt = getMinedCells();
         while (minedCellIt.hasNext()) {
-            minedCellIt.next().getMine().addMineActionListener(observer);
+            Mine m = (Mine) minedCellIt.next().getItem();
+            m.addMineActionListener(observer);
         }
     }
 
@@ -100,8 +101,9 @@ public class Field {
     private Iterator getMinedCells() {
         ArrayList <Cell> minedCells = new ArrayList<>();
         for(var i : cells.entrySet()) {
-            Mine mine = i.getValue().getMine();
-            if(mine != null) minedCells.add(i.getValue());
+            if(i.getValue().getItem() != null && i.getValue().getItem() instanceof Mine){
+                minedCells.add(i.getValue());
+            }
         }
 
         Iterator <Cell> minedCellsIterator = minedCells.iterator();
@@ -111,8 +113,9 @@ public class Field {
     private Iterator getEmptyCells() {
         ArrayList <Cell> emptyCells = new ArrayList<>();
         for(var i : cells.entrySet()) {
-            Mine mine = i.getValue().getMine();
-            if(mine == null) emptyCells.add(i.getValue());
+            if(i.getValue().isEmpty()) {
+                emptyCells.add(i.getValue());
+            }
         }
 
         Iterator <Cell> emptyCellsIterator = emptyCells.iterator();

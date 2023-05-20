@@ -2,10 +2,7 @@ package test;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import sapper.Cell;
-import sapper.Field;
-import sapper.Mine;
-import sapper.State;
+import sapper.*;
 
 import java.awt.*;
 import java.util.Iterator;
@@ -26,9 +23,9 @@ public class CellTest {
     @Test
     public void test_setMine() {
         Mine mine = new Mine();
-        cell.setMine(mine);
+        cell.setItem(mine);
 
-        assertEquals(mine, cell.getMine());
+        assertEquals(mine, cell.getItem());
     }
 
     @Test
@@ -67,10 +64,20 @@ public class CellTest {
     @Test
     public void test_openMinedCell() {
         Mine mine = new Mine();
-        cell.setMine(mine);
+        cell.setItem(mine);
         cell.open();
 
-        assertTrue(mine.isDetonated());
+        assertTrue(mine.isOpened());
+        assertEquals(State.OPEN, cell.getState());
+    }
+
+    @Test
+    public void test_openWallCell() {
+        Wall wall = new Wall(cell);
+        cell.setItem(wall);
+        cell.open();
+
+        assertTrue(wall.isOpened());
         assertEquals(State.OPEN, cell.getState());
     }
 
@@ -78,7 +85,7 @@ public class CellTest {
     public void test_openCellWithNumber() {
         Iterator <Cell> neighborCellIt= cell.neighborCells.iterator();
         while(neighborCellIt.hasNext()){
-            neighborCellIt.next().setMine(new Mine());
+            neighborCellIt.next().setItem(new Mine());
         }
         cell.open();
         int numOfNeighboringMines = cell.getNumOfNeighboringMines();
@@ -88,7 +95,7 @@ public class CellTest {
     @Test
     public void test_openEmptyCell() {
         Cell minedCell = field.getCell(new Point(2,2));
-        minedCell.setMine(new Mine());
+        minedCell.setItem(new Mine());
         cell.open();
 
         //Пустые ячейки
@@ -117,7 +124,7 @@ public class CellTest {
 
     @Test
     public void test_openIfEmpty_butCellIsMined() {
-        cell.setMine(new Mine());
+        cell.setItem(new Mine());
 
         assertFalse(cell.openIfEmpty());
         assertEquals(State.CLOSE, cell.getState());
@@ -143,9 +150,9 @@ public class CellTest {
         Cell minedCell1 = bigField.getCell(new Point(1,3));
         Cell minedCell2 = bigField.getCell(new Point(2,2));
         Cell minedCell3 = bigField.getCell(new Point(3,1));
-        minedCell1.setMine(new Mine());
-        minedCell2.setMine(new Mine());
-        minedCell3.setMine(new Mine());
+        minedCell1.setItem(new Mine());
+        minedCell2.setItem(new Mine());
+        minedCell3.setItem(new Mine());
         Cell newCell = bigField.getCell(new Point(0,0));
         newCell.open();
 

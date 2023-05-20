@@ -5,16 +5,11 @@ import sapper.event.MineActionListener;
 
 import java.util.ArrayList;
 
-public class Mine {
+public class Mine extends Item{
 
-    private boolean detonated = false;
-
-    public boolean isDetonated() {
-        return detonated;
-    }
-
-    public void detonate() {
-        detonated = true;
+    @Override
+    public void open() {
+        this.opened = true;
         fireMineIsDetonated(this);
     }
 

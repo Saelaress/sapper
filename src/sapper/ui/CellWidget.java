@@ -22,7 +22,7 @@ public class CellWidget extends JPanel {
         super.paintComponent(g);
 
         if(cell.getState() == State.OPEN) {
-            if (cell.isMined()) {
+            if (!cell.isEmpty()) {
                 g.drawImage(createMineImage(), 0, 0,  CELL_SIZE, CELL_SIZE,null);
             } else if (cell.getNumOfNeighboringMines() > 0) {
                 g.drawImage(createNumImage(cell.getNumOfNeighboringMines()), 0, 0,  CELL_SIZE, CELL_SIZE,null);

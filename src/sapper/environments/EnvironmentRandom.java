@@ -24,7 +24,7 @@ public class EnvironmentRandom extends Environment_generator {
     protected void addMines() {
         for(int i = 0; i <= Math.min(FIELD_HEIGHT, FIELD_WIDTH); i++) {
             Cell cell = findRandomEmptyCell();
-            cell.setMine(new Mine());
+            cell.setItem(new Mine());
         }
     }
 

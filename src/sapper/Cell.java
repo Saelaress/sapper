@@ -11,16 +11,16 @@ public class Cell {
     /**
      * sapper.Mine
      */
-    private Mine mine;
+    private Item item;
 
     private boolean isEmpty = true;
 
-    public Mine getMine() {
-        return mine;
+    public Item getItem() {
+        return item;
     }
 
-    public void setMine(Mine mine) {
-        this.mine = mine;
+    public void setItem(Item item) {
+        this.item = item;
         isEmpty = false;
     }
 
@@ -50,7 +50,8 @@ public class Cell {
     private void calcNumberOfNeighboringMines() {
         ListIterator<Cell> neighboringCellIt = neighborCells.listIterator();
         while (neighboringCellIt.hasNext()) {
-            if (neighboringCellIt.next().isMined() == true) {
+            Cell nc = neighboringCellIt.next();
+            if (!nc.isEmpty() && nc.getItem() instanceof Mine) {
                 incNumOfNeighboringMines();
             }
         }
@@ -70,7 +71,7 @@ public class Cell {
         return state;
     }
 
-    private void setState(State state) {
+    public void setState(State state) {
         this.state = state;
     }
 
@@ -107,8 +108,8 @@ public class Cell {
     public boolean open() {
         if(canOpen()) {
             if(!isOpen()) {
-                if(isMined()) {
-                    mine.detonate();
+                if(!isEmpty()) {
+                    item.open();
                     setState(State.OPEN);
                     fireCellIsOpen(this, true);
                     return true;
@@ -123,14 +124,13 @@ public class Cell {
         else return false;
     }
 
-    private boolean isOpen() {
+    public boolean isOpen() {
         if(getState() == State.OPEN) return true;
         else return false;
     }
 
-
     public boolean openIfEmpty() {
-        if(canOpen() == true && isMined() == false) {
+        if(canOpen() && isEmpty()) {
             setState(State.OPEN);
             calcNumberOfNeighboringMines();
             return true;
@@ -139,16 +139,13 @@ public class Cell {
     }
 
     private boolean canOpen() {
-        if((isOpen() == false && isFlag() == true) || isOpen() == true) {
-            return false;
-        }
-        else return true;
+        return !((!isOpen() && isFlag()) || isOpen());
     }
 
-    public boolean isMined() {
-        if(mine != null) return true;
-        else return false;
-    }
+//    public boolean isMined() {
+//        if(mine != null) return true;
+//        else return false;
+//    }
 
     // -------------------- События --------------------
     private ArrayList<CellActionListener> cellListListener = new ArrayList<>();

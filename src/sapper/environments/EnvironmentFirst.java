@@ -25,8 +25,8 @@ public class EnvironmentFirst extends Environment_generator{
         Mine firstMine = new Mine();
         Mine secondMine = new Mine();
 
-        field.getCell(new Point(0,2)).setMine(firstMine);
-        field.getCell(new Point(2,0)).setMine(secondMine);
+        field.getCell(new Point(0,2)).setItem(firstMine);
+        field.getCell(new Point(2,0)).setItem(secondMine);
     }
 
     @Override

@@ -11,8 +11,8 @@ public class MineTest {
     public void test_detonate() {
         Mine mine = new Mine();
 
-        mine.detonate();
+        mine.open();
 
-        assertTrue(mine.isDetonated());
+        assertTrue(mine.isOpened());
     }
 }

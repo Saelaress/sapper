@@ -85,8 +85,8 @@ public class FieldTest {
 
     @Test
     public void test_openMinedCells() {
-        field.getCell(new Point(0,0)).setMine(new Mine());
-        field.getCell(new Point(1,1)).setMine(new Mine());
+        field.getCell(new Point(0,0)).setItem(new Mine());
+        field.getCell(new Point(1,1)).setItem(new Mine());
 
         field.openMinedCells();
 
@@ -97,9 +97,25 @@ public class FieldTest {
     }
 
     @Test
+    public void test_openWallCells() {
+        field.getCell(new Point(0,0)).setItem(new Wall(field.getCell(new Point(0,0))));
+        field.getCell(new Point(1,1)).setItem(new Wall(field.getCell(new Point(1,1))));
+
+        field.getCell(new Point(0,0)).open();
+
+        assertEquals(State.OPEN, field.getCell(new Point(0,0)).getState());
+        assertTrue(field.getCell(new Point(0,0)).getItem().isOpened());
+        assertEquals(State.CLOSE, field.getCell(new Point(0,1)).getState());
+        assertEquals(State.CLOSE, field.getCell(new Point(1,0)).getState());
+        assertEquals(State.OPEN, field.getCell(new Point(1,1)).getState());
+        assertTrue(field.getCell(new Point(1,1)).getItem().isOpened());
+
+    }
+
+    @Test
     public void test_areAllEmptyCellsOpen_true() {
-        field.getCell(new Point(0,0)).setMine(new Mine());
-        field.getCell(new Point(1,1)).setMine(new Mine());
+        field.getCell(new Point(0,0)).setItem(new Mine());
+        field.getCell(new Point(1,1)).setItem(new Mine());
 
         field.getCell(new Point(0,1)).open();
         field.getCell(new Point(1,0)).open();
@@ -109,16 +125,16 @@ public class FieldTest {
 
     @Test
     public void test_areAllEmptyCellsOpen_false() {
-        field.getCell(new Point(0,0)).setMine(new Mine());
-        field.getCell(new Point(1,1)).setMine(new Mine());
+        field.getCell(new Point(0,0)).setItem(new Mine());
+        field.getCell(new Point(1,1)).setItem(new Mine());
 
         assertFalse(field.areAllEmptyCellsOpen());
     }
 
     @Test
     public void test_areAllEmptyCellsOpen_false_openOnlyMinedCells() {
-        field.getCell(new Point(0,0)).setMine(new Mine());
-        field.getCell(new Point(1,1)).setMine(new Mine());
+        field.getCell(new Point(0,0)).setItem(new Mine());
+        field.getCell(new Point(1,1)).setItem(new Mine());
 
         field.getCell(new Point(0,0)).open();
         field.getCell(new Point(1,1)).open();

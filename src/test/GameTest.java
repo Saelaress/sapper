@@ -86,7 +86,7 @@ public class GameTest {
     public void test_gameEndedInLoss_ButLeftClosedMinedCell() {
         Mine newMine = new Mine();
         newMine.addMineActionListener(new MineObserver());
-        game.getGameField().getCell(new Point(0,0)).setMine(newMine);
+        game.getGameField().getCell(new Point(0,0)).setItem(newMine);
         game.getGameField().getCell(new Point(0,2)).open();
         game.getGameField().getCell(new Point(2,0)).open();
         game.getGameField().getCell(new Point(2,2)).open();
