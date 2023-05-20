@@ -9,12 +9,12 @@ import java.awt.event.*;
 public class GameWidget extends JPanel {
     private final Game game;
     private FieldWidget fieldWidget;
-
     private GameInfoPanel gameInfoPanel;
 
-    public GameWidget(Game game){
+    public GameWidget(Game game, GameInfoPanel gameInfoPanel, FieldWidget fieldWidget){
         this.game = game;
-
+        this.gameInfoPanel = gameInfoPanel;
+        this.fieldWidget = fieldWidget;
         setFocusable(true);
         requestFocus();
     }
@@ -23,18 +23,9 @@ public class GameWidget extends JPanel {
         fieldWidget.addMouseListener(new MouseController());
     }
 
-    public FieldWidget getFieldWidget(){
-        return fieldWidget;
-    }
-    public void setFieldWidget(FieldWidget fw){
-        this.fieldWidget = fw;
-    }
-
+    public FieldWidget getFieldWidget(){ return fieldWidget; }
     public GameInfoPanel getGameInfoPanel(){
         return gameInfoPanel;
-    }
-    public void setGameInfoPanel(GameInfoPanel gp){
-        this.gameInfoPanel = gp;
     }
 
     private class MouseController implements MouseListener {

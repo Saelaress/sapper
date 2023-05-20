@@ -21,8 +21,6 @@ public class Main {
     static class GamePanel extends JFrame {
         private Game game;
         private Sapper sapper;
-        private JMenuBar menu = null;
-        private final String fileItems[] = new String []{"Новая игра", "Выход"};
         private GameWidget gameWidget;
 
         public GamePanel() throws HeadlessException {
@@ -35,10 +33,8 @@ public class Main {
 
             JPanel content = (JPanel) this.getContentPane();
             FieldWidget fieldWidget = new FieldWidget(game.getGameField());
-            gameWidget = new GameWidget(game);
-            gameWidget.setFieldWidget(fieldWidget);
             GameInfoPanel gameInfoPanel = new GameInfoPanel(sapper, this.getWidth());
-            gameWidget.setGameInfoPanel(gameInfoPanel);
+            gameWidget = new GameWidget(game, gameInfoPanel, fieldWidget);
             gameWidget.setListenerField();
 
             content.add(gameInfoPanel, BorderLayout.NORTH);

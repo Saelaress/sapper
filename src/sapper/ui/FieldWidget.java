@@ -9,7 +9,7 @@ import java.util.Map;
 public class FieldWidget extends JPanel {
 
     private final Field field;
-    private  Map<Cell, CellWidget> cellsWidgets = new HashMap<>();
+    private Map<Cell, CellWidget> cellsWidgets = new HashMap<>();
 
     public FieldWidget(Field field){
         this.field = field;
@@ -21,14 +21,14 @@ public class FieldWidget extends JPanel {
         return cellsWidgets.get(c);
     }
 
-    public Cell getCell(CellWidget cw){
-        for(Cell cell : cellsWidgets.keySet()) {
-            if(cellsWidgets.get(cell).equals(cw)) {
-                return cell;
-            }
-        }
-        return null;
-    }
+//    public Cell getCell(CellWidget cw){
+//        for(Cell cell : cellsWidgets.keySet()) {
+//            if(cellsWidgets.get(cell).equals(cw)) {
+//                return cell;
+//            }
+//        }
+//        return null;
+//    }
 
     private void fillField(){
         for(int i=0; i< field.getHeight(); i++){
