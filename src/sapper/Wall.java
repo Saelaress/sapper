@@ -13,7 +13,7 @@ public class Wall extends Item{
     }
 
     @Override
-    public void open() {
+    public void openItem() {
         this.opened = true;
         if(!cell.isOpen()) {
             cell.setState(State.OPEN);
@@ -25,8 +25,8 @@ public class Wall extends Item{
         ListIterator<Wall> neighboringWallIt = neighborWalls.listIterator();
         while (neighboringWallIt.hasNext()) {
             Wall nw = neighboringWallIt.next();
-            if(!nw.opened){
-                nw.open();
+            if(!nw.isOpened()){
+                nw.openItem();
             }
         }
     }

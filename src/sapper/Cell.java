@@ -109,7 +109,7 @@ public class Cell {
         if(canOpen()) {
             if(!isOpen()) {
                 if(!isEmpty()) {
-                    item.open();
+                    item.openItem();
                     setState(State.OPEN);
                     fireCellIsOpen(this, true);
                     return true;

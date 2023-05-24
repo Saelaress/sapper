@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class Mine extends Item{
 
     @Override
-    public void open() {
+    public void openItem() {
         this.opened = true;
         fireMineIsDetonated(this);
     }

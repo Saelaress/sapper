@@ -7,5 +7,5 @@ public abstract class Item {
         return opened;
     }
 
-    public abstract void open();
+    public abstract void openItem();
 }
