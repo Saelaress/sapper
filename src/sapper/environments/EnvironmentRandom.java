@@ -35,21 +35,19 @@ public class EnvironmentRandom extends Environment_generator {
         Cell cell2 = field.getCell(new Point(1,1));
         Cell cell3 = field.getCell(new Point(0,0));
         Cell cell4 = field.getCell(new Point(3,3));
+        Cell cell5 = field.getCell(new Point(2,0));
         Wall w1 = new Wall(cell1);
         Wall w2 = new Wall(cell2);
         Wall w3 = new Wall(cell3);
         Wall w4 = new Wall(cell4);
-        w1.neighborWalls.add(w2);
-        w1.neighborWalls.add(w3);
-        w2.neighborWalls.add(w1);
-        w2.neighborWalls.add(w3);
-        w3.neighborWalls.add(w1);
-        w3.neighborWalls.add(w2);
+        Wall w5 = new Wall(cell5);
 
         cell1.setItem(w1);
         cell2.setItem(w2);
         cell3.setItem(w3);
         cell4.setItem(w4);
+        cell5.setItem(w5);
+        field.setupNeighborWalls();
     }
 
     private Cell findRandomEmptyCell() {

@@ -4,10 +4,7 @@ import org.jetbrains.annotations.NotNull;
 import sapper.event.*;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 public class Field {
 
@@ -71,6 +68,27 @@ public class Field {
                 }
 
                 cells.put(p, cell);
+            }
+        }
+    }
+
+    public void setupNeighborWalls() {
+        for(int y = 0; y < height; ++y) {
+            for (int x = 0; x < width; ++x) {
+                Cell cell = getCell(new Point(x, y));
+
+                //итератор ячеек
+                //для каждой соседней ячейки узнать содержит ли стену, если содержит - добавить соседей (взаимно?)
+                if(!cell.isEmpty() && cell.getItem() instanceof Wall){
+                    Wall wall = (Wall) cell.getItem();
+                    ListIterator<Cell> neighboringCellIt = cell.neighborCells.listIterator();
+                    while (neighboringCellIt.hasNext()) {
+                        Cell nc = neighboringCellIt.next();
+                        if(!nc.isEmpty() && nc.getItem() instanceof Wall){
+                            wall.neighborWalls.add((Wall) nc.getItem());
+                        }
+                    }
+                }
             }
         }
     }

@@ -10,6 +10,8 @@ import test.environment_generator.TestEnvironment_generator;
 
 import java.awt.*;
 import java.util.Iterator;
+import java.util.ListIterator;
+import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -117,6 +119,26 @@ public class FieldTest {
         assertEquals(State.OPEN, field.getCell(new Point(1,1)).getState());
         assertTrue(field.getCell(new Point(1,1)).getItem().isOpened());
 
+    }
+
+    @Test
+    public void test_WallNeighbors() {
+        Field newField = new Field(3, 3);
+        newField.getCell(new Point(0, 0)).setItem(new Wall(newField.getCell(new Point(0, 0))));
+        newField.getCell(new Point(1, 0)).setItem(new Wall(newField.getCell(new Point(1, 0))));
+        newField.getCell(new Point(1, 1)).setItem(new Wall(newField.getCell(new Point(1, 1))));
+        newField.getCell(new Point(2, 0)).setItem(new Wall(newField.getCell(new Point(2, 0))));
+        newField.setupNeighborWalls();
+
+        Cell cell = newField.getCell(new Point(0, 0));
+        Wall wall = (Wall) cell.getItem();
+
+        ListIterator<Wall> neighboringWallIt = wall.neighborWalls.listIterator();
+        Wall nw = neighboringWallIt.next();
+        assertEquals(nw, newField.getCell(new Point(1, 0)).getItem());
+        nw = neighboringWallIt.next();
+        assertEquals(nw, newField.getCell(new Point(1, 1)).getItem());
+        assertThrows(NoSuchElementException.class, () -> neighboringWallIt.next());
     }
 
     @Test
