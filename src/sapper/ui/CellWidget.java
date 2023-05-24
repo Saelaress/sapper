@@ -1,6 +1,9 @@
 package sapper.ui;
 import sapper.Cell;
+import sapper.Mine;
 import sapper.State;
+import sapper.Wall;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -23,7 +26,12 @@ public class CellWidget extends JPanel {
 
         if(cell.getState() == State.OPEN) {
             if (!cell.isEmpty()) {
-                g.drawImage(createMineImage(), 0, 0,  CELL_SIZE, CELL_SIZE,null);
+                if(cell.getItem() instanceof Mine) {
+                    g.drawImage(createMineImage(), 0, 0,  CELL_SIZE, CELL_SIZE,null);
+                }
+                if(cell.getItem() instanceof Wall) {
+                    g.drawImage(getImage("wall"), 0, 0,  CELL_SIZE, CELL_SIZE,null);
+                }
             } else if (cell.getNumOfNeighboringMines() > 0) {
                 g.drawImage(createNumImage(cell.getNumOfNeighboringMines()), 0, 0,  CELL_SIZE, CELL_SIZE,null);
             } else {

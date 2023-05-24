@@ -98,8 +98,15 @@ public class FieldTest {
 
     @Test
     public void test_openWallCells() {
-        field.getCell(new Point(0,0)).setItem(new Wall(field.getCell(new Point(0,0))));
-        field.getCell(new Point(1,1)).setItem(new Wall(field.getCell(new Point(1,1))));
+        Cell cell1 = field.getCell(new Point(0,0));
+        Cell cell2 = field.getCell(new Point(1,1));
+        Wall fw = new Wall(cell1);
+        Wall sw = new Wall(cell2);
+        fw.neighborWalls.add(sw);
+        sw.neighborWalls.add(fw);
+
+        cell1.setItem(fw);
+        cell2.setItem(sw);
 
         field.getCell(new Point(0,0)).open();
 

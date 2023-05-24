@@ -1,5 +1,6 @@
 package test.environment_generator;
 
+import sapper.Cell;
 import sapper.Field;
 import sapper.Mine;
 import sapper.Wall;
@@ -17,9 +18,7 @@ public class TestEnvironment_generator extends Environment_generator {
         field = new Field(fieldWidth(), fieldHeight());
 
         addMines();
-
-        field.getCell(new Point(1,0)).setItem(new Wall(field.getCell(new Point(0,0))));
-        field.getCell(new Point(1,1)).setItem(new Wall(field.getCell(new Point(1,1))));
+        addWalls();
 
         return field;
     }
@@ -33,6 +32,18 @@ public class TestEnvironment_generator extends Environment_generator {
         field.getCell(new Point(0,2)).setItem(firstMine);
         field.getCell(new Point(2,0)).setItem(secondMine);
         field.getCell(new Point(2,2)).setItem(thirdMine);
+    }
+
+    protected void addWalls() {
+        Cell cell1 = field.getCell(new Point(1,0));
+        Cell cell2 = field.getCell(new Point(1,1));
+        Wall fw = new Wall(cell1);
+        Wall sw = new Wall(cell2);
+        fw.neighborWalls.add(sw);
+        sw.neighborWalls.add(fw);
+
+        cell1.setItem(fw);
+        cell2.setItem(sw);
     }
 
     @Override
