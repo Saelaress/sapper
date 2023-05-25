@@ -6,11 +6,12 @@ import sapper.event.CellActionListener;
 import java.util.ArrayList;
 import java.util.ListIterator;
 
+/**
+ * Класс Ячейки
+ */
 public class Cell {
 
-    /**
-     * sapper.Mine
-     */
+
     private Item item;
 
     private boolean isEmpty = true;
@@ -28,15 +29,8 @@ public class Cell {
         return isEmpty;
     }
 
-
-    /**
-     * Neighbor cells
-     */
     public ArrayList <Cell> neighborCells = new ArrayList<Cell>();
 
-    /**
-     * Neighboring Mines
-     */
     private int numOfNeighboringMines = 0;
 
     public int getNumOfNeighboringMines() {
@@ -62,9 +56,6 @@ public class Cell {
         }
     }
 
-    /**
-     * sapper.State
-     */
     private State state = State.CLOSE;
 
     public State getState() {
@@ -75,9 +66,6 @@ public class Cell {
         this.state = state;
     }
 
-    /**
-     * Flag
-     */
     public boolean setFlag() {
         if(isFlag() || isOpen()) {
             return false;
@@ -102,9 +90,6 @@ public class Cell {
         else return false;
     }
 
-    /**
-     * Opening and checking
-     */
     public boolean open() {
         if(canOpen()) {
             if(!isOpen()) {
@@ -142,10 +127,6 @@ public class Cell {
         return !((!isOpen() && isFlag()) || isOpen());
     }
 
-//    public boolean isMined() {
-//        if(mine != null) return true;
-//        else return false;
-//    }
 
     // -------------------- События --------------------
     private ArrayList<CellActionListener> cellListListener = new ArrayList<>();

@@ -1,11 +1,12 @@
 package sapper.ui;
-
 import sapper.*;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
+/**
+ * Виджет Игры
+ */
 public class GameWidget extends JPanel {
     private final Game game;
     private FieldWidget fieldWidget;

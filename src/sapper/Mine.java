@@ -5,6 +5,9 @@ import sapper.event.MineActionListener;
 
 import java.util.ArrayList;
 
+/**
+ * Класс Мины
+ */
 public class Mine extends Item{
 
     @Override

@@ -15,8 +15,10 @@ import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Класс тестов поля
+ */
 public class FieldTest {
-
     private int eventCount = 0;
 
     class FieldObserver implements FieldActionListener {

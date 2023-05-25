@@ -9,6 +9,9 @@ import java.util.Iterator;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Класс тестов ячейки
+ */
 public class CellTest {
 
     private Cell cell;

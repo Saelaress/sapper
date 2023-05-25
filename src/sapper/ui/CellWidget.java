@@ -9,6 +9,9 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Objects;
 
+/**
+ * Виджет Ячейки
+ */
 public class CellWidget extends JPanel {
     public static final int CELL_SIZE = 60;
     Cell cell;

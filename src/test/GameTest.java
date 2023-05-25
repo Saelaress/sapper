@@ -14,6 +14,9 @@ import java.awt.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * Класс тестов игры
+ */
 public class GameTest {
 
     private Game game;

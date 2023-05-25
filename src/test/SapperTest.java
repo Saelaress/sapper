@@ -12,6 +12,9 @@ import java.awt.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * Класс тестов сапера
+ */
 public class SapperTest {
     private Sapper sapper;
     private Game game;

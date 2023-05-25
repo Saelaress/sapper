@@ -1,5 +1,8 @@
 package sapper;
 
+/**
+ * Класс содержимого ячейки
+ */
 public abstract class Item {
     boolean opened = false;
 

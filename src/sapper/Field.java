@@ -6,6 +6,9 @@ import sapper.event.*;
 import java.awt.*;
 import java.util.*;
 
+/**
+ * Класс Поля
+ */
 public class Field {
 
     private Map<Point, Cell> cells = new HashMap<>();

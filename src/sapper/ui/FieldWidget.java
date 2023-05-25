@@ -6,6 +6,9 @@ import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Виджет Поля
+ */
 public class FieldWidget extends JPanel {
 
     private final Field field;

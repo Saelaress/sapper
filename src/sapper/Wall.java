@@ -2,6 +2,9 @@ package sapper;
 import java.util.ArrayList;
 import java.util.ListIterator;
 
+/**
+ * Класс стены
+ */
 public class Wall extends Item{
 
     Cell cell;

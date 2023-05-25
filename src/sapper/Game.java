@@ -6,6 +6,9 @@ import sapper.event.*;
 
 import java.util.ArrayList;
 
+/**
+ * Класс Игры
+ */
 public class Game {
 
     private Game_status game_status;

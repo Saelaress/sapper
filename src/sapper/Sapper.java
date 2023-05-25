@@ -1,5 +1,8 @@
 package sapper;
 
+/**
+ * Класс Сапера
+ */
 public class Sapper {
 
     private int life;

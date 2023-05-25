@@ -6,6 +6,9 @@ import sapper.Wall;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+/**
+ * Класс тестов стены
+ */
 public class WallTest {
 
     @Test

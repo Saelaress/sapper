@@ -8,6 +8,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Objects;
 
+/**
+ * Виджет Информационной панели
+ */
 public class GameInfoPanel extends Box {
 
     int width;

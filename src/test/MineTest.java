@@ -5,6 +5,9 @@ import sapper.Mine;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+/**
+ * Класс тестов мины
+ */
 public class MineTest {
 
     @Test
