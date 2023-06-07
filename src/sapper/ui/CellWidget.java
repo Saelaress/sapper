@@ -1,8 +1,5 @@
 package sapper.ui;
-import sapper.Cell;
-import sapper.Mine;
-import sapper.State;
-import sapper.Wall;
+import sapper.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -34,6 +31,9 @@ public class CellWidget extends JPanel {
                 }
                 if(cell.getItem() instanceof Wall) {
                     g.drawImage(getImage("wall"), 0, 0,  CELL_SIZE, CELL_SIZE,null);
+                }
+                if(cell.getItem() instanceof Mine_detector) {
+                    g.drawImage(createMineDetectorImage(), 0, 0,  CELL_SIZE, CELL_SIZE,null);
                 }
             } else if (cell.getNumOfNeighboringMines() > 0) {
                 g.drawImage(createNumImage(cell.getNumOfNeighboringMines()), 0, 0,  CELL_SIZE, CELL_SIZE,null);
@@ -76,6 +76,19 @@ public class CellWidget extends JPanel {
         }
         else g.drawImage(getImage("openCell2"), 0, 0,  CELL_SIZE, CELL_SIZE,null);
         g.drawImage(getImage("mine"), CELL_SIZE/10, CELL_SIZE/10,  CELL_SIZE*8/10, CELL_SIZE*8/10,null);
+
+        return bufferedImage;
+    }
+
+    private Image createMineDetectorImage() {
+        BufferedImage bufferedImage = new BufferedImage(CELL_SIZE,CELL_SIZE,BufferedImage.TYPE_INT_ARGB);
+        Graphics g = bufferedImage.getGraphics();
+
+        if(isLight) {
+            g.drawImage(getImage("openCell1"), 0, 0,  CELL_SIZE, CELL_SIZE,null);
+        }
+        else g.drawImage(getImage("openCell2"), 0, 0,  CELL_SIZE, CELL_SIZE,null);
+        g.drawImage(getImage("detector"), CELL_SIZE/10, CELL_SIZE/10,  CELL_SIZE*8/10, CELL_SIZE*8/10,null);
 
         return bufferedImage;
     }

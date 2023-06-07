@@ -124,6 +124,26 @@ public class FieldTest {
     }
 
     @Test
+    public void test_openMine_detector() {
+        Cell cell1 = field.getCell(new Point(0,0));
+        Mine mine = new Mine();
+        cell1.setItem(mine);
+
+        Cell cell2 = field.getCell(new Point(1,1));
+        Mine_detector mine_detector = new Mine_detector(cell2);
+        cell2.setItem(mine_detector);
+
+        cell2.open();
+        assertEquals(State.OPEN, field.getCell(new Point(0,0)).getState());
+        assertFalse(field.getCell(new Point(0,0)).getItem().isOpened());
+        assertEquals(State.CLOSE, field.getCell(new Point(0,1)).getState());
+        assertEquals(State.CLOSE, field.getCell(new Point(1,0)).getState());
+        assertEquals(State.OPEN, field.getCell(new Point(1,1)).getState());
+        assertTrue(field.getCell(new Point(1,1)).getItem().isOpened());
+
+    }
+
+    @Test
     public void test_WallNeighbors() {
         Field newField = new Field(3, 3);
         newField.getCell(new Point(0, 0)).setItem(new Wall(newField.getCell(new Point(0, 0))));

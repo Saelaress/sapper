@@ -1,9 +1,6 @@
 package sapper.environments;
 
-import sapper.Cell;
-import sapper.Field;
-import sapper.Mine;
-import sapper.Wall;
+import sapper.*;
 
 import java.awt.*;
 
@@ -16,6 +13,7 @@ public class EnvironmentRandom extends Environment_generator {
     public Field buildField() {
         field = new Field(fieldWidth(), fieldHeight());
 
+        addMine_detector();
         addWalls();
         addMines();
 
@@ -48,6 +46,14 @@ public class EnvironmentRandom extends Environment_generator {
         cell4.setItem(w4);
         cell5.setItem(w5);
         field.setupNeighborWalls();
+    }
+
+    protected void addMine_detector() {
+        Cell cell1 = field.getCell(new Point(5,5));
+
+        Mine_detector mine_detector = new Mine_detector(cell1);
+
+        cell1.setItem(mine_detector);
     }
 
     private Cell findRandomEmptyCell() {
